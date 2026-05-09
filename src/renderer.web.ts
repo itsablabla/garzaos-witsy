@@ -2,6 +2,7 @@ import '@css/index.css';
 import '@css/form.css';
 import '@css/panel.css';
 import './renderer/web.css';
+import iconUrl from '@assets/icon.png';
 
 const app = document.querySelector<HTMLDivElement>('#app');
 
@@ -9,7 +10,7 @@ if (app) {
   app.innerHTML = `
     <main class="web-home">
       <section class="web-hero" aria-labelledby="web-title">
-        <img class="web-logo" src="./assets/icon.png" alt="" />
+        <img class="web-logo" src="${iconUrl}" alt="" />
         <p class="web-eyebrow">Witsy Web Preview</p>
         <h1 id="web-title">Witsy is an AI desktop assistant.</h1>
         <p class="web-subtitle">
