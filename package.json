@@ -20,6 +20,7 @@
     "credits": "npx @opengovsg/credits-generator",
     "cli": "tsx src/cli/main.ts",
     "build:cli": "node build/build-cli.mjs",
+    "build:renderer:web": "vite build --config vite.renderer.web.config.ts",
     "test": "vitest --run",
     "test:ai": "vitest --run --silent --reporter=./tests/reporter/silent.ts",
     "test:notify": "vitest --watch --reporter=default --reporter=./tests/reporter/notify.ts",
