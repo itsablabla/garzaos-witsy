@@ -1,33 +1,38 @@
-import type { UserConfig } from 'vite';
-import rendererConfig from './vite.renderer.config';
+import { fileURLToPath } from 'node:url';
+import fs from 'node:fs';
+import path from 'node:path';
 
-export default async function config(): Promise<UserConfig> {
-  const resolved = await rendererConfig({
-    command: 'build',
-    mode: 'production',
-    root: process.cwd(),
-    isPreview: false,
-    isSsrBuild: false,
-    forgeConfig: {
-      renderer: [
-        {
-          name: 'main_window',
-          config: 'vite.renderer.config.ts',
-        },
-      ],
-    },
-    forgeConfigSelf: {
-      name: 'main_window',
-      config: 'vite.renderer.config.ts',
-    },
-  } as never);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-  return {
-    ...resolved,
-    define: {
-      ...resolved.define,
-      MAIN_WINDOW_VITE_NAME: JSON.stringify('main_window'),
-      MAIN_WINDOW_VITE_DEV_SERVER_URL: undefined,
+export default {
+  root: __dirname,
+  mode: 'production',
+  base: './',
+  build: {
+    outDir: '.vite/renderer/main_window',
+    rollupOptions: {
+      input: {
+        index: path.resolve(__dirname, 'index.web.html'),
+      },
     },
-  };
-}
+  },
+  resolve: {
+    alias: {
+      '@assets': path.resolve(__dirname, 'assets'),
+      '@css': path.resolve(__dirname, 'css'),
+      '@root': path.resolve(__dirname, './'),
+    },
+  },
+  plugins: [
+    {
+      name: 'rename-web-index',
+      closeBundle() {
+        fs.renameSync(
+          path.resolve(__dirname, '.vite/renderer/main_window/index.web.html'),
+          path.resolve(__dirname, '.vite/renderer/main_window/index.html'),
+        );
+      },
+    },
+  ],
+  clearScreen: false,
+};
