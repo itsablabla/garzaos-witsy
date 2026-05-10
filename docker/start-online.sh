@@ -10,7 +10,23 @@ export SCREEN_WIDTH="${SCREEN_WIDTH:-1440}"
 export SCREEN_HEIGHT="${SCREEN_HEIGHT:-900}"
 export SCREEN_DEPTH="${SCREEN_DEPTH:-24}"
 
-mkdir -p "$WITSY_HOME" "$HOME" /tmp/witsy-online
+NOVNC_WEB=/tmp/witsy-online/novnc-web
+mkdir -p "$WITSY_HOME" "$HOME" "$NOVNC_WEB"
+cp -a /usr/share/novnc/. "$NOVNC_WEB"/
+cat >"$NOVNC_WEB/index.html" <<'HTML'
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Witsy Online</title>
+    <meta http-equiv="refresh" content="0; url=/vnc.html?autoconnect=true&resize=scale">
+    <script>window.location.replace('/vnc.html?autoconnect=true&resize=scale')</script>
+  </head>
+  <body>
+    <a href="/vnc.html?autoconnect=true&resize=scale">Open Witsy Online</a>
+  </body>
+</html>
+HTML
 
 if [[ -z "${VNC_PASSWORD:-}" ]]; then
   VNC_PASSWORD="$(tr -dc 'A-Za-z0-9' </dev/urandom | head -c 24)"
@@ -81,7 +97,7 @@ start_service "x11vnc" /tmp/x11vnc.log \
 wait_for_port 127.0.0.1 "$VNC_PORT" "x11vnc"
 
 start_service "noVNC/websockify" /tmp/novnc.log \
-  websockify --web=/usr/share/novnc "0.0.0.0:${NOVNC_PORT}" "127.0.0.1:${VNC_PORT}"
+  websockify --web="$NOVNC_WEB" "0.0.0.0:${NOVNC_PORT}" "127.0.0.1:${VNC_PORT}"
 
 wait_for_port 127.0.0.1 "$NOVNC_PORT" "noVNC/websockify"
 
