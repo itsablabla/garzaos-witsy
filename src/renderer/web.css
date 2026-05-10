@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, var(--color-primary-container), transparent 28rem),
+    var(--background-color);
+  color: var(--text-color);
+  font: var(--text-body-lg);
+}
+
+.web-home {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  gap: 1.5rem;
+  padding: 3rem 1.5rem;
+}
+
+.web-hero,
+.web-card {
+  width: min(100%, 52rem);
+  box-sizing: border-box;
+  border: 1px solid var(--color-outline-subtle);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--color-surface-lowest), transparent 8%);
+  box-shadow: var(--shadow-overlay);
+}
+
+.web-hero {
+  padding: 4rem;
+}
+
+.web-logo {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.web-eyebrow {
+  margin: 2rem 0 0.75rem;
+  color: var(--color-secondary);
+  font: var(--text-label-md);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-0);
+}
+
+.web-hero h1 {
+  margin: 0;
+  max-width: 42rem;
+  color: var(--color-on-surface);
+  font-size: var(--font-size-48);
+  line-height: var(--line-height-56);
+  letter-spacing: var(--letter-spacing-tight-2);
+}
+
+.web-subtitle {
+  max-width: 44rem;
+  margin: 1.25rem 0 0;
+  color: var(--color-on-surface-variant);
+  font: var(--text-body-xl);
+}
+
+.web-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.web-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border-radius: var(--radius-md);
+  font: var(--text-label-lg);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.web-button-primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.web-button-secondary {
+  border: 1px solid var(--color-outline-variant);
+  background: var(--color-surface-lowest);
+  color: var(--color-on-surface);
+}
+
+.web-card {
+  padding: 1.5rem;
+}
+
+.web-card h2 {
+  margin: 0;
+  font: var(--text-heading-20);
+}
+
+.web-card p {
+  margin: 0.5rem 0 0;
+  color: var(--color-on-surface-variant);
+  font: var(--text-body-md);
+}
+
+@media (max-width: 720px) {
+  .web-hero {
+    padding: 2rem;
+  }
+
+  .web-hero h1 {
+    font-size: var(--font-size-32);
+    line-height: var(--line-height-40);
+  }
+}
