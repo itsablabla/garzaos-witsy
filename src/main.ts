@@ -59,6 +59,12 @@ let trayIconManager: TrayIconManager;
 let keyMonitor: KeyMonitor;
 let dictation: Dictation;
 
+if (process.env.WITSY_ONLINE) {
+  app.commandLine.appendSwitch('no-sandbox');
+  app.commandLine.appendSwitch('disable-gpu');
+  app.commandLine.appendSwitch('disable-dev-shm-usage');
+}
+
 // first-thing: single instance
 // on darwin this is done through Info.plist (LSMultipleInstancesProhibited)
 if (process.platform !== 'darwin' && !process.env.TEST) {
@@ -207,7 +213,7 @@ app.whenReady().then(async () => {
   }
 
   // debugging
-  if (process.env.DEBUG) {
+  if (process.env.DEBUG && !process.env.WITSY_ONLINE) {
     installExtension(VUEJS_DEVTOOLS)
       .then((name) => console.log(`Added Extension:  ${name}`))
       .catch((err) => console.log('An error while installing Extension: ', err));
